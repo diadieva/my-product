@@ -25,4 +25,5 @@
 | [research/notes/03-competitors.md](research/notes/03-competitors.md) | Конкуренти: хард, софт, аспіраційні |
 | [research/notes/04-matrix.md](research/notes/04-matrix.md) | Матриця 5 конкурентів за осями нашого продукту |
 | [research/notes/05-benchmark.md](research/notes/05-benchmark.md) | Бенчмарк виміру «Як задача завершується» |
+| [research/notes/06-patterns.md](research/notes/06-patterns.md) | 5 UX-патернів ключової задачі й вибір для нашого контексту |
 | [research/screens/](research/screens/) | Скріни конкурентів (Happy Paw, Домівка, Monobank, Kiva, Donkey Sanctuary) |
