@@ -114,7 +114,7 @@
 Теки заводяться тоді, коли вони потрібні, — не наперед.
 - `index.html` — стартова сторінка.
 - `_nav/` — навігатор репо (`tree.js` — дерево сторінок, `nav.js`, `nav.css`).
-- `research/`, `research/screens/` — дослідження; `research/notes/` — нотатки досліджень (markdown).
+- `research/`, `research/screens/` — дослідження; `research/notes/` — нотатки досліджень (markdown); скріни конкурентів — `research/screens/<компанія>/` (`-mobile` 390×844, `-desktop` 1440×900, JPEG). `research/screens/own/` — скріни власного акаунта, лише з замазаними особистими даними.
 - `.nojekyll` — обов'язковий: без нього Pages не віддає теки з `_`.
 
 ## Навігатор

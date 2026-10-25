@@ -23,4 +23,5 @@
 | [CLAUDE.md](CLAUDE.md) | Повний бриф, правила навігатора й імен |
 | [_nav/tree.js](_nav/tree.js) | Дерево сторінок для навігатора |
 | [research/notes/03-competitors.md](research/notes/03-competitors.md) | Конкуренти: хард, софт, аспіраційні |
-| [research/screens/](research/screens/) | Скріни референсів (поки порожньо) |
+| [research/notes/04-matrix.md](research/notes/04-matrix.md) | Матриця 5 конкурентів за осями нашого продукту |
+| [research/screens/](research/screens/) | Скріни конкурентів (Happy Paw, Домівка, Monobank, Kiva, Donkey Sanctuary) |
