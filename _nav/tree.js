@@ -11,5 +11,8 @@
 // ] }
 
 window.NAV_TREE = [
-  { title: "Старт", href: "index.html" }
+  { title: "Старт", href: "index.html" },
+  { title: "Ресерч", children: [
+    { title: "Підсумок дослідження", href: "research/research.html" }
+  ] }
 ];

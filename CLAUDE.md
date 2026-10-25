@@ -4,6 +4,8 @@
 
 Репо: https://github.com/diadieva/my-product · Сайт: https://diadieva.github.io/my-product/
 
+Висновки ресерчу — у `research/research.md`.
+
 ## Організація
 
 Реабілітаційний центр «Прайд», с. Кандибине, Миколаївська обл., Україна.

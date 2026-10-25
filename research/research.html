@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="uk" data-root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Прайд · Ресерч</title>
+  <link rel="stylesheet" href="../_nav/nav.css">
+  <script defer src="../_nav/tree.js"></script>
+  <script defer src="../_nav/nav.js"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f0f0e;
+      --surface: #181817;
+      --surface-2: #20201e;
+      --line: #2d2d2a;
+      --text: #ecebe6;
+      --muted: #a09f98;
+      --accent: #f2a65a;
+      --accent-soft: rgba(242, 166, 90, .14);
+      --good: #7fcf9b;
+      --warn: #e7c46a;
+      --bad: #ef8a7a;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+    main { max-width: 1120px; margin: 0 auto; padding: 32px 16px 96px; }
+    @media (min-width: 900px) { main { padding: 48px 40px 120px; } }
+
+    header.hero { margin-bottom: 32px; }
+    .eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 8px; }
+    h1 { font-size: clamp(30px, 6vw, 48px); line-height: 1.08; letter-spacing: -.02em; margin: 0 0 12px; }
+    .lead { color: var(--muted); max-width: 720px; margin: 0; font-size: 16px; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; padding: 0; list-style: none; }
+    .toc a { display: inline-block; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); text-decoration: none; font-size: 13px; }
+    .toc a:hover { border-color: var(--accent); }
+
+    .provenance { display: grid; gap: 8px; margin: 28px 0 0; }
+    @media (min-width: 720px) { .provenance { grid-template-columns: repeat(3, 1fr); } }
+    .prov { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+    .prov b { display: block; font-size: 13px; margin-bottom: 4px; }
+    .prov span { color: var(--muted); font-size: 13px; }
+
+    section { padding-top: 56px; }
+    section > h2 { font-size: clamp(22px, 4vw, 30px); letter-spacing: -.01em; margin: 0 0 6px; display: flex; align-items: baseline; gap: 12px; }
+    section > h2 .num { color: var(--accent); font-size: .6em; font-weight: 700; letter-spacing: .08em; }
+    .sub { color: var(--muted); margin: 0 0 20px; max-width: 760px; }
+    h3 { font-size: 17px; margin: 32px 0 12px; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+    .matrix table { min-width: 1080px; }
+    th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    thead th { background: var(--surface-2); color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .02em; position: sticky; top: 0; }
+    tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+    tbody th { font-weight: 600; white-space: nowrap; }
+    tbody th small { display: block; color: var(--muted); font-weight: 400; }
+    td .lock { color: var(--warn); }
+    .src { font-size: 11.5px; white-space: nowrap; }
+    .src a { color: var(--muted); }
+    .src a:hover { color: var(--accent); }
+    .nd { color: var(--warn); font-style: italic; }
+
+    .cards { display: grid; gap: 12px; }
+    @media (min-width: 760px) { .cards.three { grid-template-columns: repeat(3, 1fr); } }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+    .card h4 { margin: 0 0 6px; font-size: 15px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .card p + p { margin-top: 8px; }
+    .card .k { color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: .06em; }
+    .card.no { border-color: rgba(239, 138, 122, .4); }
+    .card.no .k { color: var(--bad); }
+    .card.yes { border-color: rgba(242, 166, 90, .45); background: linear-gradient(180deg, var(--accent-soft), var(--surface) 60%); }
+
+    .callout { border-left: 3px solid var(--accent); background: var(--surface); padding: 14px 18px; border-radius: 0 var(--radius) var(--radius) 0; margin: 0 0 20px; }
+    .callout p { margin: 0; }
+
+    .score { font-variant-numeric: tabular-nums; font-weight: 700; }
+    .bar { display: block; height: 6px; background: var(--surface-2); border-radius: 3px; margin-top: 6px; min-width: 120px; }
+    .bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+
+    .gallery { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 12px; scroll-snap-type: x proximity; }
+    .gallery figure { margin: 0; flex: 0 0 auto; width: 168px; scroll-snap-align: start; }
+    .gallery figure.wide { width: 320px; }
+    .gallery a.shot { display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+    .gallery a.shot:hover { border-color: var(--accent); }
+    .gallery img { display: block; width: 100%; height: 300px; object-fit: cover; object-position: top; }
+    .gallery figure.wide img { height: 200px; }
+    .gallery figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+    .gallery figcaption b { color: var(--text); font-weight: 600; }
+    .group-label { font-size: 13px; color: var(--muted); margin: 18px 0 6px; }
+    .group-label b { color: var(--text); }
+
+    ol.clean, ul.clean { margin: 0; padding-left: 20px; }
+    ol.clean li, ul.clean li { margin: 6px 0; }
+
+    .sources { columns: 1; font-size: 13px; color: var(--muted); }
+    @media (min-width: 760px) { .sources { columns: 2; column-gap: 32px; } }
+    .sources h4 { color: var(--text); font-size: 13px; margin: 16px 0 6px; break-after: avoid; }
+    .sources p { margin: 4px 0; break-inside: avoid; }
+    .sources code { color: var(--accent); font-size: 12px; }
+    :target { scroll-margin-top: 16px; }
+    .sources p:target { background: var(--accent-soft); border-radius: 4px; }
+    footer { margin-top: 64px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+  </style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <p class="eyebrow">Прайд · дослідження · кроки 03–06</p>
+    <h1>Ресерч: що робить ринок і де наш шанс</h1>
+    <p class="lead">Конкуренти, бенчмарк виміру, де ринок найслабший, патерн ключової задачі та гіпотези для MVP. Джерело тексту — <a href="https://github.com/diadieva/my-product/blob/main/research/research.md">research.md</a>, матеріал зібрано 25.10.2026.</p>
+    <ul class="toc">
+      <li><a href="#competitors">1 · Конкуренти</a></li>
+      <li><a href="#benchmark">2 · Бенчмарк</a></li>
+      <li><a href="#patterns">3 · Патерни</a></li>
+      <li><a href="#conclusions">4 · Висновки</a></li>
+      <li><a href="#sources">Джерела</a></li>
+    </ul>
+    <div class="provenance">
+      <div class="prov"><b>Власний акаунт</b><span>Нічого. Теки <code>research/screens/own/</code> немає, скрінів власного акаунта не надходило.</span></div>
+      <div class="prov"><b>Публічні сторінки 🌐</b><span>Усі факти та скріни: сайти компаній, App Store, довідкові центри, прес-релізи, статті.</span></div>
+      <div class="prov"><b>Не бачили наживо 🔒</b><span>Екрани за логіном і після оплати. Де немає офіційного опису — «дані не підтверджені».</span></div>
+    </div>
+  </header>
+
+  <!-- 1. КОНКУРЕНТИ -->
+  <section id="competitors">
+    <h2><span class="num">01</span> Конкуренти</h2>
+    <p class="sub">П'ятеро з трьох груп. Хард: Happy Paw, Домівка врятованих тварин. Софт: Monobank «Банка», Kiva. Аспіраційний: The Donkey Sanctuary. Деталі вибору — <a href="https://github.com/diadieva/my-product/blob/main/research/notes/04-matrix.md">04-matrix.md</a>.</p>
+
+    <h3>Матриця за осями нашого продукту</h3>
+    <div class="table-wrap matrix">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Компанія</th>
+            <th scope="col">1. Перший екран</th>
+            <th scope="col">2. Ключова задача: знайти → підписатися → підтримати</th>
+            <th scope="col">3. Видимий результат допомоги — чи видно одразу</th>
+            <th scope="col">4. Як задача завершується</th>
+            <th scope="col">5. Мова</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Happy Paw<small>хард</small></th>
+            <td>Логотип, «Підтримати фонд», промо-слайдер партнера, мапа «Допоможи своїм». Тварин немає. <span class="src"><a href="#src-HP1">HP1</a></span></td>
+            <td>«Опіка на відстані» → 537 тварин з ID і ціною <span class="src"><a href="#src-HP2">HP2</a></span> → профіль, «Візьми мене під опіку» <span class="src"><a href="#src-HP3">HP3</a></span> → <b>вікно «Вхід»</b> і рекламний поп-ап <span class="src"><a href="#src-HP4">HP4</a></span></td>
+            <td><b>Частково.</b> Ціну й що вона покриває видно одразу. Результат («пухнасті листи») обіцяно текстом. <span class="src"><a href="#src-HP2">HP2</a></span></td>
+            <td><span class="lock">🔒</span> Обіцяно листи з фото/відео «не рідше, ніж раз на 2 місяці» <span class="src"><a href="#src-HP2">HP2</a></span>. Відписка від донату — лише листом на email <span class="src"><a href="#src-HP5">HP5</a></span></td>
+            <td>Українська <span class="src"><a href="#src-HP6">HP6</a></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Домівка<small>хард</small></th>
+            <td>Лише застосунок. За App Store: «Притулок», сітка тварин, пошук, «Мої тварини». <span class="lock">🔒</span> застосунок не відкривали <span class="src"><a href="#src-DV1">DV1</a></span></td>
+            <td>Каталог → повна місячна або часткова разова опіка, QR у притулку <span class="src"><a href="#src-DV1">DV1</a></span>. Реєстрація кодом на email; відгуки: «не приходить лист з підтвердженням» <span class="src"><a href="#src-DV2">DV2</a></span>. Від 50 грн <span class="src"><a href="#src-DV3">DV3</a></span></td>
+            <td><b>Так, у застосунку:</b> «Мої тварини», «Наші звіти», «Потреби притулку» <span class="src"><a href="#src-DV1">DV1</a></span></td>
+            <td>Екран від імені тварини: «Привіт, це я Софі!…»; досягнення; скасування опіки з v1.5.1 <span class="src"><a href="#src-DV1">DV1</a></span></td>
+            <td>Українська <span class="src"><a href="#src-DV1">DV1</a></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Monobank «Банка»<small>софт</small></th>
+            <td>Один збір: фото, автор, «Зібрано / Ціль», суми +100/+500/+1000, mono Pay, Google/Apple Pay <span class="src"><a href="#src-MB1">MB1</a> <a href="#src-MB2">MB2</a></span></td>
+            <td>Каталогу немає. Сума → коментар → оплата, <b>без реєстрації</b>, один екран <span class="src"><a href="#src-MB1">MB1</a></span></td>
+            <td><b>Лише гроші:</b> прогрес до цілі. Що зроблено — не видно <span class="src"><a href="#src-MB1">MB1</a></span></td>
+            <td><span class="lock">🔒</span> <span class="nd">Екран після оплати: дані не підтверджені</span></td>
+            <td>Українська <span class="src"><a href="#src-MB1">MB1</a></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Kiva<small>софт</small></th>
+            <td>Фото позичальниці, «Real people, real solutions», «Find someone to support» <span class="src"><a href="#src-KV1">KV1</a></span></td>
+            <td>«All loans» з фільтрами → картка «$… to go» → «Lend» <span class="src"><a href="#src-KV2">KV2</a></span> → <b>кошик без логіну</b> <span class="src"><a href="#src-KV3">KV3</a></span> → <span class="lock">🔒</span> оформлення</td>
+            <td><b>Так:</b> прогрес-бар, «$… to go» <span class="src"><a href="#src-KV2">KV2</a></span></td>
+            <td>Повернення на рахунок, можна позичити знову <span class="src"><a href="#src-KV4">KV4</a></span>. <span class="lock">🔒</span> оновлення за логіном</td>
+            <td>Англійська <span class="src"><a href="#src-KV1">KV1</a></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Donkey Sanctuary<small>аспіраційний</small></th>
+            <td>Головна про організацію; «Adopt»: «Choose your favourite donkey», <b>фільтр за характером</b>, вебкамери <span class="src"><a href="#src-DS1">DS1</a> <a href="#src-DS2">DS2</a></span></td>
+            <td>16 віслюків → профіль з історією й друзями, «£4 monthly / £48 one-off» <span class="src"><a href="#src-DS3">DS3</a></span> → <b>кошик без логіну</b> <span class="src"><a href="#src-DS4">DS4</a></span> → <span class="nd">оформлення: дані не підтверджені</span></td>
+            <td><b>Так:</b> характер і вебкамера в профілі <span class="src"><a href="#src-DS3">DS3</a></span></td>
+            <td>Пакет поштою за 14 днів, <b>два оновлення на рік</b>, опіка в подарунок <span class="src"><a href="#src-DS3">DS3</a></span></td>
+            <td>Англійська <span class="src"><a href="#src-DS1">DS1</a></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Скріни</h3>
+    <p class="group-label"><b>Happy Paw</b> · хард</p>
+    <div class="gallery">
+      <figure><a class="shot" href="screens/happy-paw/home-mobile.jpg"><img src="screens/happy-paw/home-mobile.jpg" alt="Happy Paw: головна на мобільному, кнопка «Підтримати фонд» і промо-слайдер" loading="lazy"></a><figcaption><b>HP1</b> Перший екран</figcaption></figure>
+      <figure><a class="shot" href="screens/happy-paw/guardianship-mobile-full.jpg"><img src="screens/happy-paw/guardianship-mobile.jpg" alt="Happy Paw: сторінка «Опіка на відстані»" loading="lazy"></a><figcaption><b>HP2</b> Опіка на відстані</figcaption></figure>
+      <figure><a class="shot" href="screens/happy-paw/guardianship-card-mobile.jpg"><img src="screens/happy-paw/guardianship-card-mobile.jpg" alt="Happy Paw: профіль кішки в програмі опіки" loading="lazy"></a><figcaption><b>HP3</b> Профіль тварини</figcaption></figure>
+      <figure><a class="shot" href="screens/happy-paw/guardianship-click-mobile.jpg"><img src="screens/happy-paw/guardianship-click-mobile.jpg" alt="Happy Paw: після кліку «Візьми мене під опіку» відкривається вікно входу і рекламний поп-ап" loading="lazy"></a><figcaption><b>HP4</b> Клік → «Вхід» і поп-ап</figcaption></figure>
+      <figure class="wide"><a class="shot" href="screens/happy-paw/contribution-desktop.jpg"><img src="screens/happy-paw/contribution-desktop.jpg" alt="Happy Paw: форма донату, відписка від підписки листом" loading="lazy"></a><figcaption><b>HP5</b> Донат: відписка листом</figcaption></figure>
+    </div>
+    <p class="group-label"><b>Домівка врятованих тварин</b> · хард</p>
+    <div class="gallery">
+      <figure class="wide"><a class="shot" href="screens/domivka/appstore-desktop.jpg"><img src="screens/domivka/appstore-desktop.jpg" alt="Сторінка застосунку Домівки в App Store зі скрінами каталогу, привітання від тварини і розділу допомоги" loading="lazy"></a><figcaption><b>DV1</b> App Store: скріни застосунку</figcaption></figure>
+    </div>
+    <p class="group-label"><b>Monobank «Банка»</b> · софт</p>
+    <div class="gallery">
+      <figure><a class="shot" href="screens/monobank-banka/jar-mobile.jpg"><img src="screens/monobank-banka/jar-mobile.jpg" alt="Банка UAnimals на мобільному: зібрано і ціль, суми, кнопки оплати" loading="lazy"></a><figcaption><b>MB1</b> Банка, мобільний</figcaption></figure>
+      <figure class="wide"><a class="shot" href="screens/monobank-banka/jar-desktop.jpg"><img src="screens/monobank-banka/jar-desktop.jpg" alt="Банка UAnimals на десктопі" loading="lazy"></a><figcaption><b>MB2</b> Банка, десктоп</figcaption></figure>
+    </div>
+    <p class="group-label"><b>Kiva</b> · софт</p>
+    <div class="gallery">
+      <figure><a class="shot" href="screens/kiva/home-mobile.jpg"><img src="screens/kiva/home-mobile.jpg" alt="Kiva: головна, «Find someone to support»" loading="lazy"></a><figcaption><b>KV1</b> Перший екран</figcaption></figure>
+      <figure><a class="shot" href="screens/kiva/lend-mobile.jpg"><img src="screens/kiva/lend-mobile.jpg" alt="Kiva: каталог позик з прогресом і кнопкою Lend" loading="lazy"></a><figcaption><b>KV2</b> All loans</figcaption></figure>
+      <figure><a class="shot" href="screens/kiva/basket-mobile.jpg"><img src="screens/kiva/basket-mobile.jpg" alt="Kiva: кошик без логіну з таймером резерву" loading="lazy"></a><figcaption><b>KV3</b> Кошик без логіну</figcaption></figure>
+      <figure><a class="shot" href="screens/kiva/how-it-works-mobile.jpg"><img src="screens/kiva/how-it-works-mobile.jpg" alt="Kiva: як це працює" loading="lazy"></a><figcaption><b>KV4</b> How Kiva works</figcaption></figure>
+    </div>
+    <p class="group-label"><b>The Donkey Sanctuary</b> · аспіраційний</p>
+    <div class="gallery">
+      <figure><a class="shot" href="screens/donkey-sanctuary/home-mobile.jpg"><img src="screens/donkey-sanctuary/home-mobile.jpg" alt="Donkey Sanctuary: головна" loading="lazy"></a><figcaption><b>DS1</b> Головна</figcaption></figure>
+      <figure><a class="shot" href="screens/donkey-sanctuary/adopt-mobile.jpg"><img src="screens/donkey-sanctuary/adopt-mobile.jpg" alt="Donkey Sanctuary: Adopt a donkey, фільтр за характером" loading="lazy"></a><figcaption><b>DS2</b> Фільтр за характером</figcaption></figure>
+      <figure><a class="shot" href="screens/donkey-sanctuary/profile-ashley-mobile-full.jpg"><img src="screens/donkey-sanctuary/profile-ashley-mobile.jpg" alt="Donkey Sanctuary: профіль віслюка Ashley з бейджем вебкамери і кнопками опіки" loading="lazy"></a><figcaption><b>DS3</b> Профіль Ashley</figcaption></figure>
+      <figure><a class="shot" href="screens/donkey-sanctuary/adopt-basket-mobile.jpg"><img src="screens/donkey-sanctuary/adopt-basket-mobile.jpg" alt="Donkey Sanctuary: кошик опіки без логіну" loading="lazy"></a><figcaption><b>DS4</b> Кошик без логіну</figcaption></figure>
+    </div>
+
+    <h3>Три спільні патерни ринку</h3>
+    <div class="cards three">
+      <div class="card"><p class="k">ПАТЕРН 1</p><h4>Стіна перед підтримкою</h4><p>Логін перед опікою в Happy Paw, реєстрація в Домівці, оформлення Kiva за логіном. Без акаунта можна лише там, де немає героя (Банка). Виняток — кошик Donkey.</p><p class="src"><a href="#src-HP4">HP4</a> <a href="#src-DV2">DV2</a> <a href="#src-KV3">KV3</a> <a href="#src-MB1">MB1</a> <a href="#src-DS4">DS4</a></p></div>
+      <div class="card"><p class="k">ПАТЕРН 2</p><h4>Фіксована ціна «за героя»</h4><p>Happy Paw 600–1 900 грн, Donkey £4/міс або £48 разово, Kiva від $25. Ціну видно ще в каталозі.</p><p class="src"><a href="#src-HP2">HP2</a> <a href="#src-DS3">DS3</a> <a href="#src-KV1">KV1</a></p></div>
+      <div class="card"><p class="k">ПАТЕРН 3</p><h4>Оновлення рідкі й обіцяні текстом</h4><p>«Не рідше, ніж раз на 2 місяці», «двічі на рік», за логіном. Приклад оновлення до оплати не показує ніхто.</p><p class="src"><a href="#src-HP2">HP2</a> <a href="#src-DS3">DS3</a> <a href="#src-KV4">KV4</a></p></div>
+    </div>
+
+    <h3>Три відмінності</h3>
+    <div class="cards three">
+      <div class="card"><p class="k">ВІДМІННІСТЬ 1</p><h4>Голос тварини чи організації</h4><p>Від імені тварини говорять Домівка («Привіт, це я Софі!») і Donkey (характер, друзі). Happy Paw — анкета з ID. Банка і Kiva — голос збору.</p><p class="src"><a href="#src-DV1">DV1</a> <a href="#src-DS3">DS3</a> <a href="#src-HP3">HP3</a></p></div>
+      <div class="card"><p class="k">ВІДМІННІСТЬ 2</p><h4>Як шукають «свого»</h4><p>За характером (Donkey), за категоріями й прогресом (Kiva), довгим списком за ID і ціною (Happy Paw), сіткою з пошуком (Домівка; просять фільтр «терміново»).</p><p class="src"><a href="#src-DS2">DS2</a> <a href="#src-KV2">KV2</a> <a href="#src-HP2">HP2</a> <a href="#src-DV2">DV2</a></p></div>
+      <div class="card"><p class="k">ВІДМІННІСТЬ 3</p><h4>Канал і форма</h4><p>Один екран оплати (Банка), веб і кошик (Kiva), веб і логін (Happy Paw), лише застосунок із проблемною реєстрацією (Домівка), веб плюс пакет поштою (Donkey).</p><p class="src"><a href="#src-MB1">MB1</a> <a href="#src-KV3">KV3</a> <a href="#src-DV2">DV2</a> <a href="#src-DS3">DS3</a></p></div>
+    </div>
+  </section>
+
+  <!-- 2. БЕНЧМАРК -->
+  <section id="benchmark">
+    <h2><span class="num">02</span> Бенчмарк</h2>
+    <p class="sub">Вимір «Як задача завершується» (вісь 4 матриці) — тут ринок найслабший щодо видимого результату допомоги. Деталі — <a href="https://github.com/diadieva/my-product/blob/main/research/notes/05-benchmark.md">05-benchmark.md</a>.</p>
+    <div class="callout"><p><b>Чого не бачить людина:</b> після підтримки — що змінилося для тварини завдяки її внеску. Оновлення рідкі, обіцяні текстом, сховані за логіном і не показані до оплати. <span class="src"><a href="#src-HP2">HP2</a> <a href="#src-DS3">DS3</a> <a href="#src-KV4">KV4</a> <a href="#src-MB1">MB1</a></span></p></div>
+
+    <h3>Еталони з інших ніш · 8 критеріїв від 1 до 5</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Продукт</th><th scope="col">Ніша</th><th scope="col">Бал з 40</th><th scope="col">Чим сильний</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Domino's Tracker</th><td>Доставка їжі</td><td><span class="score">34</span><span class="bar"><i style="width:85%"></i></span></td><td>Етапи «placed → make → deliver → mmm!», Live Activities на екрані блокування <span class="src"><a href="#src-DM1">DM1</a></span></td></tr>
+          <tr><th scope="row">GiveDirectly Live</th><td>Прямі перекази</td><td><span class="score">32</span><span class="bar"><i style="width:80%"></i></span></td><td>Публічні невідредаговані історії, виплати «1 hour ago» <span class="src"><a href="#src-GD1">GD1</a> <a href="#src-GD3">GD3</a></span></td></tr>
+          <tr><th scope="row">charity: water</th><td>Благодійність</td><td><span class="score">31</span><span class="bar"><i style="width:77.5%"></i></span></td><td>«As easy as tracking a package», фото і GPS проєкту, особиста мапа <span class="src"><a href="#src-CW1">CW1</a> <a href="#src-CW2">CW2</a></span></td></tr>
+          <tr><th scope="row">DonorsChoose</th><td>Краудфандинг шкіл</td><td><span class="score">27</span><span class="bar"><i style="width:67.5%"></i></span></td><td>Лист учителя, 2–10 фото, листи учнів <span class="src"><a href="#src-DC1">DC1</a> <a href="#src-DC2">DC2</a></span></td></tr>
+          <tr><th scope="row">Tree-Nation</th><td>Висаджування дерев</td><td><span class="score">27</span><span class="bar"><i style="width:67.5%"></i></span></td><td>Сертифікат на екрані підтвердження, «Your forest» <span class="src"><a href="#src-TN1">TN1</a> <a href="#src-TN2">TN2</a></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub" style="margin-top:10px">Критерії: миттєве закриття циклу, прив'язка до мого внеску, доказовість, ритм оновлень, прогрес у часі, видно до дії, чесність, канал і доступ. Частину оцінок «що видно одразу після дії» поставлено за офіційним описом <span class="lock">🔒</span>; <span class="nd">екран після донату DonorsChoose і GiveDirectly: дані не підтверджені</span>. Повна таблиця — <a href="https://github.com/diadieva/my-product/blob/main/research/notes/05-benchmark.md">05-benchmark.md</a>.</p>
+
+    <div class="gallery">
+      <figure><a class="shot" href="screens/benchmark/charity-water/waterproof-mobile.jpg"><img src="screens/benchmark/charity-water/waterproof-mobile.jpg" alt="charity: water WaterProof: відстежувати пожертву як посилку" loading="lazy"></a><figcaption><b>CW1</b> WaterProof</figcaption></figure>
+      <figure><a class="shot" href="screens/benchmark/charity-water/project-mobile.jpg"><img src="screens/benchmark/charity-water/project-mobile.jpg" alt="charity: water: сторінка проєкту на мапі з GPS-координатами" loading="lazy"></a><figcaption><b>CW2</b> Проєкт з GPS</figcaption></figure>
+      <figure><a class="shot" href="screens/benchmark/givedirectly/live-mobile.jpg"><img src="screens/benchmark/givedirectly/live-mobile.jpg" alt="GiveDirectly Live: стрічка живих виплат" loading="lazy"></a><figcaption><b>GD1</b> GiveDirectly Live</figcaption></figure>
+      <figure><a class="shot" href="screens/benchmark/donorschoose/thankyou-help-mobile.jpg"><img src="screens/benchmark/donorschoose/thankyou-help-mobile.jpg" alt="DonorsChoose: склад пакета подяки" loading="lazy"></a><figcaption><b>DC1</b> Thank-you Package</figcaption></figure>
+      <figure><a class="shot" href="screens/benchmark/tree-nation/certificate-help-mobile.jpg"><img src="screens/benchmark/tree-nation/certificate-help-mobile.jpg" alt="Tree-Nation: сертифікат дерева" loading="lazy"></a><figcaption><b>TN2</b> Сертифікат дерева</figcaption></figure>
+      <figure><a class="shot" href="screens/benchmark/dominos/press-mobile.jpg"><img src="screens/benchmark/dominos/press-mobile.jpg" alt="Прес-реліз Domino's про оновлений трекер" loading="lazy"></a><figcaption><b>DM1</b> Domino's: прес-реліз (сам трекер 🔒)</figcaption></figure>
+    </div>
+
+    <h3>Топ-3 механізми для MVP</h3>
+    <div class="cards three">
+      <div class="card yes"><p class="k">МЕХАНІЗМ 1</p><h4>Трекер турботи з етапами</h4><p>«Отримали → Купили (корм / ліки / коваль) → Зроблено → Фото від тварини». Волонтер відмічає етап одним тапом з телефона.</p><p>Етапи знімають тривогу очікування (Domino's); донат «як посилка» (charity: water); на нашому ринку після оплати порожньо.</p><p class="src"><a href="#src-DM1">DM1</a> <a href="#src-CW1">CW1</a> <a href="#src-HP2">HP2</a> <a href="#src-MB1">MB1</a></p></div>
+      <div class="card yes"><p class="k">МЕХАНІЗМ 2</p><h4>Публічна стрічка живих моментів</h4><p>Короткі датовані оновлення тварини, видні до підписки, разом із непростими новинами — спокійно, без тиску.</p><p>GiveDirectly показує 114 792 історії без логіну й не вирізає погане; у нас приклад оновлення до оплати не показує ніхто.</p><p class="src"><a href="#src-GD1">GD1</a> <a href="#src-GD3">GD3</a> <a href="#src-HP2">HP2</a> <a href="#src-DS3">DS3</a></p></div>
+      <div class="card yes"><p class="k">МЕХАНІЗМ 3</p><h4>Миттєве закриття + «моя колекція»</h4><p>Екран від імені тварини одразу після дії, листівка з QR, колекція «Мої улюбленці».</p><p>Сертифікат на екрані підтвердження (Tree-Nation), особиста мапа (charity: water), «Привіт, це я Софі!» (Домівка).</p><p class="src"><a href="#src-TN2">TN2</a> <a href="#src-CW1">CW1</a> <a href="#src-DV1">DV1</a></p></div>
+    </div>
+    <h3>Не спрацює</h3>
+    <div class="card no"><p class="k">ВІДКИДАЄМО</p><h4>Відстеження кожного внеску в реальному часі (рівень Domino's / Live Activities)</h4><p>Центр купує корм партіями — Happy Paw закуповує на початку наступного місяця, тож хвилинні статуси довелося б вигадувати; навіть Domino's стикається з питанням «реальний стан чи оцінка». Команда з 1–3 волонтерів не має складської інтеграції, а постійні пуші суперечать вимозі брифу «без надмірного тиску».</p><p class="src"><a href="#src-HP2">HP2</a> <a href="#src-DM2">DM2</a> · <a href="https://github.com/diadieva/my-product/blob/main/CLAUDE.md">CLAUDE.md</a></p></div>
+  </section>
+
+  <!-- 3. ПАТЕРНИ -->
+  <section id="patterns">
+    <h2><span class="num">03</span> Патерни</h2>
+    <p class="sub">Ключова задача: допомогти знайти тварину, з якою виникне емоційний зв'язок, підписатися на її історію і за бажанням підтримати. П'ять патернів: каталог, свайп-колода, квіз-підбір, стрічка історій, мапа-простір — <a href="https://github.com/diadieva/my-product/blob/main/research/notes/06-patterns.md">06-patterns.md</a>.</p>
+
+    <div class="card yes">
+      <p class="k">ОБРАНО</p>
+      <h4>Стрічка історій — «спочатку стежиш, потім обираєш»</h4>
+      <ol class="clean">
+        <li><b>Повернення вбудоване в пошук.</b> Бриф: «не разова транзакція, а особистий досвід турботи», «хочеться повертатися». Каталог і квіз закінчуються вибором, стрічка з нього починається. <span class="src"><a href="https://github.com/diadieva/my-product/blob/main/CLAUDE.md">CLAUDE.md</a></span></li>
+        <li><b>Закриває прогалину ринку.</b> Справжні оновлення видно до підписки; «Стежити» — один тап без грошей, окремо від донату. <span class="src"><a href="#src-GD1">GD1</a> · <a href="https://github.com/diadieva/my-product/blob/main/CLAUDE.md">CLAUDE.md</a></span></li>
+        <li><b>Працює на реальних ресурсах центру.</b> Один пост волонтера з телефона — момент у стрічці, рядок у профілі, лист і повідомлення в Telegram. <span class="src"><a href="https://github.com/diadieva/my-product/blob/main/CLAUDE.md">CLAUDE.md</a></span></li>
+      </ol>
+      <p style="margin-top:12px">Умови: мінімальний ритм публікацій (<span class="nd">орієнтир 3–5 моментів на тиждень — дані не підтверджені</span>); хронологія або ручний відбір без «підсилення сліз»; обов'язковий список «Усі тварини» з пошуком за ім'ям для доступності.</p>
+    </div>
+    <div class="cards three" style="margin-top:12px">
+      <div class="card"><p class="k">ДРУГИЙ ЗА УМОВИ</p><h4>Квіз-підбір</h4><p>Якщо в тварин заповнено 4–5 рис характеру — як вхід для нових відвідувачів, а не головний екран.</p></div>
+      <div class="card no"><p class="k">НЕ ПІДХОДИТЬ</p><h4>Свайп-колода</h4><p>«Ліворуч» по врятованій тварині, упередження проти старих і травмованих, пул 20–50 тварин закінчується за хвилину.</p></div>
+      <div class="card"><p class="k">ЯК ДЕТАЛЬ</p><h4>Мапа-простір</h4><p>Не основа, але може бути приємною деталлю в профілі: хто з ким живе в стайні.</p></div>
+    </div>
+  </section>
+
+  <!-- 4. ВИСНОВКИ -->
+  <section id="conclusions">
+    <h2><span class="num">04</span> Висновки: прогалини → гіпотези</h2>
+    <p class="sub">Гіпотези ще не перевірені — це припущення для наступних кроків. <span class="nd">Базові цифри для перевірки (конверсії, утримання): дані не підтверджені</span>, власних даних продукту ще немає.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">#</th><th scope="col">Прогалина ринку</th><th scope="col">Гіпотеза</th><th scope="col">Звідки</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Не можна стежити за твариною без оплати <span class="src"><a href="#src-HP2">HP2</a> <a href="#src-DV1">DV1</a> <a href="#src-MB1">MB1</a></span></td><td>Якщо «Стежити» доступне в один тап без грошей і пароля, більше людей почнуть стосунки з твариною, а частина згодом стане опікунами</td><td>Конкуренти · Патерни</td></tr>
+          <tr><td>2</td><td>Стіна реєстрації, відмови на підтвердженні <span class="src"><a href="#src-HP4">HP4</a> <a href="#src-DV2">DV2</a></span></td><td>Якщо перший донат і першу підписку дозволити без кабінету (кабінет — після, через magic link), менше людей кинуть оформлення</td><td>Конкуренти</td></tr>
+          <tr><td>3</td><td>Після підтримки результату не видно <span class="src"><a href="#src-HP2">HP2</a> <a href="#src-DS3">DS3</a></span></td><td>Якщо показувати етапи «Отримали → Купили → Зроблено → Фото», довіра і повторні донати зростуть</td><td>Бенчмарк · механізм 1</td></tr>
+          <tr><td>4</td><td>Приклад оновлення до оплати не показує ніхто <span class="src"><a href="#src-HP2">HP2</a> <a href="#src-DS3">DS3</a> <a href="#src-KV2">KV2</a></span></td><td>Якщо справжні моменти тварини публічні в стрічці, конверсія з перегляду в підписку буде вищою, ніж у каталозі</td><td>Бенчмарк · механізм 2 · Патерни</td></tr>
+          <tr><td>5</td><td>«Свого» шукають у довгому списку за ID і ціною <span class="src"><a href="#src-HP2">HP2</a> <a href="#src-DV2">DV2</a></span></td><td>Якщо знайомство йде через моменти й характер, увага розподілиться рівніше між молодими та старими чи травмованими тваринами</td><td>Конкуренти · Патерни</td></tr>
+          <tr><td>6</td><td>Говорить організація, а не тварина; немає емоційного завершення <span class="src"><a href="#src-HP3">HP3</a> <a href="#src-MB1">MB1</a></span></td><td>Якщо після дії показати екран від імені тварини й листівку з QR, більше людей поширюватимуть і повертатимуться</td><td>Конкуренти · Бенчмарк · механізм 3</td></tr>
+          <tr><td>7</td><td>Велика тварина ≈10 000 грн/міс проти 1 500–2 500 грн за кота чи собаку <span class="src"><a href="#src-DV3">DV3</a></span>; ринок дає фіксовану ціну <span class="src"><a href="#src-HP2">HP2</a> <a href="#src-DS3">DS3</a></span></td><td>Якщо опіку коня можна ділити між кількома людьми з видимим «покрито X з Y», коні отримають більше опікунів</td><td>Конкуренти · питання до PM</td></tr>
+          <tr><td>8</td><td>Відписка від регулярного донату — листом <span class="src"><a href="#src-HP5">HP5</a></span></td><td>Якщо керувати регулярним донатом в один тап без провини, довіра зросте, а скарг і повернень через банк стане менше</td><td>Конкуренти · вісь 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ДЖЕРЕЛА -->
+  <section id="sources">
+    <h2><span class="num">↗</span> Джерела</h2>
+    <p class="sub">Усе — публічні сторінки 🌐. Скріни — у <code>research/screens/</code>.</p>
+    <div class="sources">
+      <h4>Happy Paw</h4>
+      <p id="src-HP1"><code>HP1</code> <a href="screens/happy-paw/home-mobile.jpg">Головна</a> · <a href="https://happypaw.ua/ua">happypaw.ua/ua</a></p>
+      <p id="src-HP2"><code>HP2</code> <a href="screens/happy-paw/guardianship-mobile-full.jpg">Опіка на відстані</a> · <a href="https://happypaw.ua/ua/guardianship">happypaw.ua/ua/guardianship</a></p>
+      <p id="src-HP3"><code>HP3</code> <a href="screens/happy-paw/guardianship-card-mobile.jpg">Профіль тварини</a> · <a href="https://happypaw.ua/ua/guardianship/card/38591">…/card/38591</a></p>
+      <p id="src-HP4"><code>HP4</code> <a href="screens/happy-paw/guardianship-click-mobile.jpg">Клік → «Вхід» і поп-ап</a></p>
+      <p id="src-HP5"><code>HP5</code> <a href="screens/happy-paw/contribution-desktop.jpg">Підтримати фонд</a> · <a href="https://happypaw.ua/ua/contribution">happypaw.ua/ua/contribution</a></p>
+      <p id="src-HP6"><code>HP6</code> <a href="screens/happy-paw/home-desktop.jpg">Головна, десктоп</a></p>
+      <h4>Домівка врятованих тварин</h4>
+      <p id="src-DV1"><code>DV1</code> <a href="screens/domivka/appstore-desktop.jpg">App Store: опис, скріни</a> · <a href="https://apps.apple.com/ua/app/id6470241195">apps.apple.com</a></p>
+      <p id="src-DV2"><code>DV2</code> Відгуки там само в <a href="https://apps.apple.com/ua/app/id6470241195">App Store</a></p>
+      <p id="src-DV3"><code>DV3</code> <a href="https://rubryka.com/2026/01/14/diyeva-onlajn-dopomoga-tvarynam-yak-spratsyuvav-mobilnyj-zastosunok-lvivskogo-prytulku-dlya-krylatyh-ta-chotyrylapyh/">Рубрика, 14.01.2026</a></p>
+      <h4>Monobank «Банка»</h4>
+      <p id="src-MB1"><code>MB1</code> <a href="screens/monobank-banka/jar-mobile.jpg">Мобільний</a> · <a href="https://send.monobank.ua/jar/6nrNhKu86G">send.monobank.ua/jar/6nrNhKu86G</a></p>
+      <p id="src-MB2"><code>MB2</code> <a href="screens/monobank-banka/jar-desktop.jpg">Десктоп</a></p>
+      <h4>Kiva</h4>
+      <p id="src-KV1"><code>KV1</code> <a href="screens/kiva/home-mobile.jpg">Головна</a> · <a href="https://www.kiva.org/">kiva.org</a></p>
+      <p id="src-KV2"><code>KV2</code> <a href="screens/kiva/lend-mobile.jpg">All loans</a> · <a href="https://www.kiva.org/lend-by-category">kiva.org/lend-by-category</a></p>
+      <p id="src-KV3"><code>KV3</code> <a href="screens/kiva/basket-mobile.jpg">Кошик</a> · <a href="https://www.kiva.org/checkout">kiva.org/checkout</a></p>
+      <p id="src-KV4"><code>KV4</code> <a href="screens/kiva/how-it-works-mobile.jpg">How Kiva works</a> · <a href="https://www.kiva.org/about/how">kiva.org/about/how</a></p>
+      <h4>The Donkey Sanctuary</h4>
+      <p id="src-DS1"><code>DS1</code> <a href="screens/donkey-sanctuary/home-mobile.jpg">Головна</a> · <a href="https://www.thedonkeysanctuary.org.uk/">thedonkeysanctuary.org.uk</a></p>
+      <p id="src-DS2"><code>DS2</code> <a href="screens/donkey-sanctuary/adopt-mobile.jpg">Adopt a donkey</a> · <a href="https://www.thedonkeysanctuary.org.uk/adopt">…/adopt</a></p>
+      <p id="src-DS3"><code>DS3</code> <a href="screens/donkey-sanctuary/profile-ashley-mobile-full.jpg">Профіль Ashley</a> · <a href="https://www.thedonkeysanctuary.org.uk/adopt/ashley">…/adopt/ashley</a></p>
+      <p id="src-DS4"><code>DS4</code> <a href="screens/donkey-sanctuary/adopt-basket-mobile.jpg">Кошик опіки</a> · <a href="https://www.thedonkeysanctuary.org.uk/basket">…/basket</a></p>
+      <h4>Бенчмарк</h4>
+      <p id="src-CW1"><code>CW1</code> <a href="screens/benchmark/charity-water/waterproof-mobile.jpg">charity: water WaterProof</a> · <a href="https://www.charitywater.org/uk/waterproof">charitywater.org/uk/waterproof</a></p>
+      <p id="src-CW2"><code>CW2</code> <a href="screens/benchmark/charity-water/project-mobile.jpg">Проєкт Bihanga II</a> · <a href="https://www.charitywater.org/projects/423-7">…/projects/423-7</a></p>
+      <p id="src-DC1"><code>DC1</code> <a href="screens/benchmark/donorschoose/thankyou-help-mobile.jpg">DonorsChoose: Thank-you Package</a> · <a href="https://help.donorschoose.org/hc/en-us/articles/202137803">help.donorschoose.org</a></p>
+      <p id="src-DC2"><code>DC2</code> <a href="screens/benchmark/donorschoose/waiting-help-mobile.jpg">Student Thank-Yous</a> · <a href="https://help.donorschoose.org/hc/en-us/articles/201937136-Donors-waiting-for-Student-Thank-Yous">help.donorschoose.org</a></p>
+      <p id="src-GD1"><code>GD1</code> <a href="screens/benchmark/givedirectly/live-mobile.jpg">GiveDirectly Live</a> · <a href="https://live.givedirectly.org/">live.givedirectly.org</a></p>
+      <p id="src-GD3"><code>GD3</code> <a href="https://basicincome.org/topic/givedirectly/page/3">BIEN: запуск GDLive</a></p>
+      <p id="src-TN1"><code>TN1</code> <a href="screens/benchmark/tree-nation/forest-help-mobile.jpg">Tree-Nation: Your forest</a> · <a href="https://kb.tree-nation.com/knowledge/your-forest-and-trees">kb.tree-nation.com</a></p>
+      <p id="src-TN2"><code>TN2</code> <a href="screens/benchmark/tree-nation/certificate-help-mobile.jpg">Tree-Nation: Tree Certificate</a> · <a href="https://kb.tree-nation.com/knowledge/my-tree-certificate">kb.tree-nation.com</a></p>
+      <p id="src-DM1"><code>DM1</code> <a href="screens/benchmark/dominos/press-mobile.jpg">Domino's, прес-реліз 24.03.2026</a> · <a href="https://ir.dominos.com/node/24451">ir.dominos.com</a></p>
+      <p id="src-DM2"><code>DM2</code> <a href="https://www.restaurantbusinessonline.com/technology/dominos-upgrades-pizza-tracker-more-play-play">Restaurant Business, 24.03.2026</a></p>
+    </div>
+  </section>
+
+  <footer>Зібрано з <a href="https://github.com/diadieva/my-product/blob/main/research/research.md">research/research.md</a> · нотатки кроків 03–06 у <code>research/notes/</code> · <a href="https://github.com/diadieva/my-product/blob/main/CLAUDE.md">CLAUDE.md</a></footer>
+</main>
+</body>
+</html>
