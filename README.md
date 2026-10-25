@@ -22,5 +22,5 @@
 | [Стартова сторінка](https://diadieva.github.io/my-product/) ([файл](index.html)) | Опис продукту і навігатор |
 | [CLAUDE.md](CLAUDE.md) | Повний бриф, правила навігатора й імен |
 | [_nav/tree.js](_nav/tree.js) | Дерево сторінок для навігатора |
-| [research/](research/) | Дослідження (поки порожньо) |
+| [research/notes/03-competitors.md](research/notes/03-competitors.md) | Конкуренти: хард, софт, аспіраційні |
 | [research/screens/](research/screens/) | Скріни референсів (поки порожньо) |
