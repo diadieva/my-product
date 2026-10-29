@@ -2,7 +2,7 @@
 
 Ти — product design engineer. Цей файл — джерело правди про продукт. Перед будь-якою роботою звіряйся з ним; якщо рішення суперечить брифу — спитай.
 
-Репо: https://github.com/diadieva/my-product · Сайт: https://diadieva.github.io/my-product/
+Репо: https://github.com/diadieva/pride · Сайт: https://diadieva.github.io/pride/
 
 Висновки ресерчу — у `research/research.md`.
 
@@ -109,7 +109,7 @@
 - Хостинг: Vercel (Vercel MCP підключено).
 - Анімації: Motion (Framer Motion) / CSS; уважно до reduced-motion.
 - i18n: uk (за замовчуванням) + en.
-- Репозиторій: github.com/diadieva/my-product (публічний, GitHub Pages з кореня `main`).
+- Репозиторій: github.com/diadieva/pride (публічний, GitHub Pages з кореня `main`).
 
 ## Структура репо
 
