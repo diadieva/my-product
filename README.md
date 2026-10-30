@@ -28,4 +28,9 @@
 | [research/notes/04-matrix.md](research/notes/04-matrix.md) | Матриця 5 конкурентів за осями нашого продукту |
 | [research/notes/05-benchmark.md](research/notes/05-benchmark.md) | Бенчмарк виміру «Як задача завершується» |
 | [research/notes/06-patterns.md](research/notes/06-patterns.md) | 5 UX-патернів ключової задачі й вибір для нашого контексту |
+| [research/notes/people.md](research/notes/people.md) | Що ресерч каже про людей і чого ми про них не знаємо |
+| [research/notes/personas-review.md](research/notes/personas-review.md) | Сувора критика персон і JTBD: статуси тверджень, ризики, 3 питання для перевірки |
+| [personas.md](personas.md) | Реєстр персон: Опікун (primary), Терміновий донатор, Спостерігач |
+| [jtbd.md](jtbd.md) | Jobs to be done: ієрархія jobs, гіпотези, JTBD-матриця і висновок для ядра MVP |
+| [Персони і JTBD на сайті](https://diadieva.github.io/pride/personas.html) ([personas.html](personas.html)) | Персони, ієрархія jobs і JTBD-матриця однією сторінкою |
 | [research/screens/](research/screens/) | Скріни конкурентів (Happy Paw, Домівка, Monobank, Kiva, Donkey Sanctuary) |

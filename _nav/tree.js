@@ -14,5 +14,8 @@ window.NAV_TREE = [
   { title: "Старт", href: "index.html" },
   { title: "Ресерч", children: [
     { title: "Підсумок дослідження", href: "research/research.html" }
+  ] },
+  { title: "Персони", children: [
+    { title: "Персони і JTBD", href: "personas.html" }
   ] }
 ];
